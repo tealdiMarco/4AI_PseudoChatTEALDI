@@ -28,3 +28,71 @@
             tutto il resto deve essere prelevato dal server
 
 */
+
+
+var indirizzoServer = "http://localhost:63342/4AI_PseudoChatTEALDI/server/";
+
+
+function init(){
+
+
+    let promise = fetch(indirizzoServer+"utenti.php",{
+        method : 'POST',
+        headers:{'Content-Type':'application/json'},
+
+    });
+
+    promise.then(
+        async(risposta)=>{
+            let dati = await risposta.json(); //<- prendo cio che ho mandato nell' eco di php
+            console.log(dati);
+
+            crea(dati);
+        }
+
+
+    );
+
+
+
+}
+
+function crea (dati)
+{
+    let list = document.getElementById("listUtenti");
+    let i;
+    for(i=1; i<dati.length; i++)
+    {
+        let _li = document.createElement("li");
+        _li.innerHTML=dati[i].nome +" "+dati[i].cognome[0]+".";
+        _li.onclick = function ()
+        {
+            alert("ciao");
+            divN = document.getElementsByName("divNome");
+            divN.InnerHTML=dati[i].nome;
+
+
+
+
+        }
+        list.appendChild(_li);
+
+
+        let _div = document.createElement("div");
+        _div.className+="material-symbols-outlined icone";
+        if(dati[i].genere =="m")
+            _div.innerHTML="face";
+        else
+            _div.innerHTML="face_3";
+
+        _li.appendChild(_div);
+    }
+}
+
+function aggiorna(nome,cognome,genere)
+{
+    alert("ciao");
+
+}
+
+
